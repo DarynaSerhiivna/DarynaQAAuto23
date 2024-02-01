@@ -16,3 +16,15 @@ class GitHub:
         body = r.json()
 
         return body
+    
+    def get_emojis(self):
+        r = requests.get('https://api.github.com/emojis')
+        body = r.json()
+
+        return body
+    
+    def list_commits(self, owner):
+        r = requests.get(f'https://api.github.com/repos/{owner}/DarynaQAAuto23/commits')
+        body = r.json()
+
+        return body
