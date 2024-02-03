@@ -57,3 +57,17 @@ class Database():
         record = self.cursor.fetchall()
         return record    
 
+    def insert_customer(self, id, name, address, city, postalCode, country):
+        query = f"INSERT OR REPLACE INTO customers (id, name, address, city, postalCode, country)\
+            VALUES ({id}, '{name}', '{address}', '{city}', '{postalCode}', '{country}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def insert_order(self, id, customer_id, product_id, order_date):
+        query = f"INSERT OR REPLACE INTO orders (id, customer_id, product_id, order_date )\
+            VALUES ({id}, {customer_id}, {product_id}, '{order_date}')"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+          
+

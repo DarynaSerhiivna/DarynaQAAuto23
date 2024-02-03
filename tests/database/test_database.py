@@ -69,3 +69,47 @@ def test_datailed_orders():
     assert orders[0][2] == 'солодка вода'
     assert orders[0][3] == 'з цукром'
 
+
+@pytest.mark.database
+def test_product_insert_where_qnt_zero():
+    db = Database()
+    db.insert_product(77, 'apple', 'green', 0)
+    qnt = db.select_product_qnt_by_id(77)
+
+    assert qnt[0][0] == 0
+
+
+@pytest.mark.database
+def test_product_insert_where_qnt_large_int():
+    db = Database()
+    db.insert_product(79, 'lemon', 'frozen', 1234567890)
+    qnt = db.select_product_qnt_by_id(79)
+    
+    assert qnt[0][0] == 1234567890
+
+
+@pytest.mark.database 
+def test_product_cant_be_deleted_when_order_exists():
+    db = Database()
+    db.insert_product(78, 'apple', 'green', 1000 )
+    db.insert_customer(123, 'Any', 'Any', 'Any', '0000', 'Any')
+    db.insert_order(111, 123, 78, '11/22/63')
+    with pytest.raises(ValueError, match='Wrong Result'):db.delete_product_by_id(78)
+
+
+@pytest.mark.database
+def test_order_cant_be_created_for_unexistng_customer():
+    db = Database()
+    db.insert_product(20, 'tea', 'black', 10)
+    with pytest.raises(ValueError, match='User not exist'):db.insert_order(100, 1000, 20, '11/11/11')
+     
+    
+@pytest.mark.database
+def test_customer_cant_be_created_with_no_name():
+    db = Database()
+    with pytest.raises(ValueError, match='User name is None'):
+        db.insert_customer(80, None, 'Any', 'Any', '1212', 'Any' )
+
+
+
+
