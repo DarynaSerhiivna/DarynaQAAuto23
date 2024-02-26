@@ -13,7 +13,7 @@ Framework cover the following tests types:
 - install [Chrome](https://www.google.com/intl/uk/chrome/)
 - install [Python 3](https://www.python.org/downloads/)
 - install [pytest](https://docs.pytest.org/en/7.1.x/getting-started.html)
-- install [Requests](https://requests.readthedocs.io/en/latest/user/install/   #install)
+- install [Requests](https://requests.readthedocs.io/en/latest/user/install/%23install)
 - install [Selenium](https://selenium-python.readthedocs.io/installation.html)
 
 # Run
