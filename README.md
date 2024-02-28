@@ -2,7 +2,7 @@
 
 The purpose of Test Automation Framework is a set of libraries that simplifies automation tests development process.
 
-Framework cover the following tests types:
+Framework covers the following test types:
 
 - UI automation tests
 - API automation tests
