@@ -1,3 +1,8 @@
 __pycache__/
 .pytest_cache/
+.cache
 .DS_Store
+*.py[cod]
+*$py.class
+.Python
+.idea/

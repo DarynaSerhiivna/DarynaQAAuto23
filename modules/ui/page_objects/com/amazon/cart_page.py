@@ -35,11 +35,10 @@ class CartPage(BasePage):
                       
     def wait_for_subtotal_quantity_change(self, initial_quantity):
         attempts = 10
-        while attempts > 0:
+        for i in range(1, attempts + 1):
             if self.get_subtotal_quantity() != initial_quantity:
                 break
-            time.sleep(1)
-            attempts -= 1 
+            time.sleep(1) 
 
     def get_subtotal_quantity(self):
         subtotal_quantity =  DriverConfig.get_driver().find_element(By.ID, "sc-buy-box")\
