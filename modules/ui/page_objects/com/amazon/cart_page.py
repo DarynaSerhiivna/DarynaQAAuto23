@@ -8,12 +8,18 @@ from selenium.webdriver.support.ui import Select
 import time
 
 class CartPage(BasePage):
+    SUBTOTAL = "sc-price"
+    DELETE_BUTTON = ".//input[@value='Delete']"
+    ITEM = "sc-list-item-content"
+    QUANTITY = "quantity"
+    BUY_BOX = "sc-buy-box"
+    SUBTOTAL_QUANTITY = "data-quantity"
 
     def __init__(self) -> None:
         super().__init__()
 
     def get_subtotal(self):
-        locale_price =  WaitUtils.wait_for_element_visibility((By.CLASS_NAME, "sc-price")).text
+        locale_price =  WaitUtils.wait_for_element_visibility((By.CLASS_NAME, CartPage.SUBTOTAL)).text
 
         return Price(locale_price)
     
@@ -22,14 +28,14 @@ class CartPage(BasePage):
     
     def delete_item(self, position):
         items = self.get_items()
-        items[position - 1].find_element(By.XPATH,".//input[@value='Delete']").click()
+        items[position - 1].find_element(By.XPATH, CartPage.DELETE_BUTTON).click()
 
     def get_items(self):
-        return DriverConfig.get_driver().find_elements(By.CLASS_NAME,"sc-list-item-content")
+        return DriverConfig.get_driver().find_elements(By.CLASS_NAME, CartPage.ITEM)
     
     def set_quantity(self, position, quantity):
         initial_quantity = self.get_subtotal_quantity()
-        dropdowns = WaitUtils.wait_for_all_elements_visibility((By.ID,"quantity"))
+        dropdowns = WaitUtils.wait_for_all_elements_visibility((By.ID, CartPage.QUANTITY))
         Select(dropdowns[position - 1]).select_by_index(quantity)
         self.wait_for_subtotal_quantity_change(initial_quantity)
                       
@@ -41,7 +47,8 @@ class CartPage(BasePage):
             time.sleep(1) 
 
     def get_subtotal_quantity(self):
-        subtotal_quantity =  DriverConfig.get_driver().find_element(By.ID, "sc-buy-box")\
-            .get_attribute("data-quantity")
+        subtotal_quantity =  DriverConfig.get_driver().find_element(By.ID, CartPage.BUY_BOX)\
+            .get_attribute(CartPage.SUBTOTAL_QUANTITY)
         
         return int(subtotal_quantity)
+    

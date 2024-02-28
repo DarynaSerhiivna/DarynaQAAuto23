@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 
 class SearchPage(BasePage):
     URL = "https://amazon.com/s"
+    ITEM = "//*[starts-with(@cel_widget_id,'MAIN-SEARCH_RESULTS')]//*[@data-component-type]/a"
 
     def __init__(self) -> None:
         super().__init__()
@@ -13,4 +14,4 @@ class SearchPage(BasePage):
         DriverConfig.get_driver().get(SearchPage.URL + f"/?k={search_request}")
       
     def click_first_item(self):
-        WaitUtils.wait_for_element_visibility((By.XPATH, "//*[starts-with(@cel_widget_id,'MAIN-SEARCH_RESULTS')]//*[@data-component-type]/a")).click()
+        WaitUtils.wait_for_element_visibility((By.XPATH, SearchPage.ITEM)).click()
